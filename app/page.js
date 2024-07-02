@@ -1,11 +1,11 @@
 import Image from "next/image";
-
+import Link from "next/link";
 export default function Home() {
   return (
     <>
       <div className="flex flex-col gap-4 justify-center items-center text-white py-10">
         <div className="font-bold text-5xl flex justify-center items-center">
-          Buy Me a Chai
+          Get Me a Chai
           <img className="invertImg" src="/img/tea.gif" width={80} alt="" />
         </div>
         <p>
@@ -13,18 +13,22 @@ export default function Home() {
           followers. Start now!
         </p>
         <div>
-          <button
-            type="button"
-            class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-          >
-            Start Now
-          </button>
-          <button
-            type="button"
-            class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-          >
-            Read More
-          </button>
+          <Link href={"/login"}>
+            <button
+              type="button"
+              class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            >
+              Start Now
+            </button>
+          </Link>
+          <Link href={"/about"}>
+            <button
+              type="button"
+              class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            >
+              Read More
+            </button>
+          </Link>
         </div>
       </div>
       <div className="bg-white h-[2px] opacity-15"></div>
@@ -72,7 +76,16 @@ export default function Home() {
           Learn more About us
         </h2>
         <div className="flex gap-5 justify-center">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/sfg7sysw7KU?si=tuUJtKd6LEmORFlH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/ojuUnfqnUI0?si=vrLPybFsJtJieEMF"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
         </div>
       </div>
     </>

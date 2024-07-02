@@ -3,12 +3,16 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { updateProfile, fetchuser } from "@/actions/useractions";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Dashboard = () => {
-  const { data: session } = useSession();
+  const { data: session, update } = useSession();
   const router = useRouter();
 
   useEffect(() => {
+    getData();
     if (!session) {
       router.push("/login");
     }
@@ -18,11 +22,19 @@ const Dashboard = () => {
     name: "",
     email: "",
     username: "",
-    profilePicture: "",
-    coverPicture: "",
-    razorpayId: "",
-    razorpaySecret: "",
+    profilepic: "",
+    coverpic: "",
+    razorpayid: "",
+    razorpaysecret: "",
   });
+
+  const getData = async () => {
+    if (session) {
+      let u = await fetchuser(session.user.name);
+      setFormData(u);
+    }
+  };
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,23 +44,34 @@ const Dashboard = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission logic here
-    console.log("Form data submitted: ", formData);
+  const handleSubmit = async (e) => {
+    update()
+    let a = await updateProfile(e, session.user.name);
+    toast("🦄 Profile Updated!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
   };
 
   return (
+    <>
+     <ToastContainer />
     <div className="dashboard p-6">
       <h1 className="text-3xl text-center font-bold p-2">
         Welcome to your Dashboard
       </h1>
       <div className="container bg-slate-900 border-2 border-white rounded-lg w-[50%] p-5 mx-auto">
-        <form onSubmit={handleSubmit}>
+        <form action={handleSubmit}>
           <div className="input-group flex flex-col">
             <label htmlFor="name">Name</label>
             <input
-              required
+              
               type="text"
               name="name"
               className="border-2 my-2 w-full border-slate-950 bg-slate-950 rounded-lg p-3"
@@ -60,7 +83,7 @@ const Dashboard = () => {
           <div className="input-group flex flex-col">
             <label htmlFor="email">Email</label>
             <input
-              required
+              
               type="text"
               name="email"
               className="border-2 my-2 w-full border-slate-950 bg-slate-950 rounded-lg p-3"
@@ -72,7 +95,7 @@ const Dashboard = () => {
           <div className="input-group flex flex-col">
             <label htmlFor="username">Username</label>
             <input
-              required
+              
               type="text"
               name="username"
               className="border-2 my-2 w-full border-slate-950 bg-slate-950 rounded-lg p-3"
@@ -82,50 +105,50 @@ const Dashboard = () => {
             />
           </div>
           <div className="input-group flex flex-col">
-            <label htmlFor="profilePicture">Profile Picture</label>
+            <label htmlFor="profilepic">Profile Picture</label>
             <input
-              required
+              
               type="text"
-              name="profilePicture"
+              name="profilepic"
               className="border-2 my-2 w-full border-slate-950 bg-slate-950 rounded-lg p-3"
               placeholder="Enter Profile Picture"
-              value={formData.profilePicture}
+              value={formData.profilepic}
               onChange={handleChange}
             />
           </div>
           <div className="input-group flex flex-col">
-            <label htmlFor="coverPicture">Cover Picture</label>
+            <label htmlFor="coverpic">Cover Picture</label>
             <input
-              required
+              
               type="text"
-              name="coverPicture"
+              name="coverpic"
               className="border-2 my-2 w-full border-slate-950 bg-slate-950 rounded-lg p-3"
               placeholder="Enter Cover Picture"
-              value={formData.coverPicture}
+              value={formData.coverpic}
               onChange={handleChange}
             />
           </div>
           <div className="input-group flex flex-col">
-            <label htmlFor="razorpayId">Razorpay ID</label>
+            <label htmlFor="razorpayid">Razorpay ID</label>
             <input
-              required
+              
               type="text"
-              name="razorpayId"
+              name="razorpayid"
               className="border-2 my-2 w-full border-slate-950 bg-slate-950 rounded-lg p-3"
               placeholder="Enter Razorpay ID"
-              value={formData.razorpayId}
+              value={formData.razorpayid}
               onChange={handleChange}
             />
           </div>
           <div className="input-group flex flex-col">
-            <label htmlFor="razorpaySecret">Razorpay Secret</label>
+            <label htmlFor="razorpaysecret">Razorpay Secret</label>
             <input
-              required
+              
               type="text"
-              name="razorpaySecret"
+              name="razorpaysecret"
               className="border-2 my-2 w-full border-slate-950 bg-slate-950 rounded-lg p-3"
               placeholder="Enter Razorpay Secret"
-              value={formData.razorpaySecret}
+              value={formData.razorpaysecret}
               onChange={handleChange}
             />
           </div>
@@ -138,6 +161,7 @@ const Dashboard = () => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 
