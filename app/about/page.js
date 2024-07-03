@@ -43,7 +43,7 @@ const About = () => {
       <div className="bg-white h-[2px] opacity-15 mb-12"></div>
       <div className="text-center">
         <h2 className="text-3xl font-bold mb-4">Learn More About Us</h2>
-        <div className="flex justify-center mb-12">
+        <div className="flex gap-5 justify-center items-center mx-auto w-[80vw] md:w-auto">
           <iframe
             width="560"
             height="315"
@@ -61,3 +61,6 @@ const About = () => {
 }
 
 export default About;
+export const metadata = {
+  title:"About | Get Me a Chai",
+}

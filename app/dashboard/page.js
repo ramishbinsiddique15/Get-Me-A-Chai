@@ -12,6 +12,7 @@ const Dashboard = () => {
   const router = useRouter();
 
   useEffect(() => {
+    document.title = "Dashboard | Get Me a Chai";
     getData();
     if (!session) {
       router.push("/login");
@@ -66,7 +67,7 @@ const Dashboard = () => {
       <h1 className="text-3xl text-center font-bold p-2">
         Welcome to your Dashboard
       </h1>
-      <div className="container bg-slate-900 border-2 border-white rounded-lg w-[50%] p-5 mx-auto">
+      <div className="container bg-slate-900 border-2 border-white rounded-lg w-[95%] md:w-[50%] p-5 mx-auto">
         <form action={handleSubmit}>
           <div className="input-group flex flex-col">
             <label htmlFor="name">Name</label>

@@ -8,8 +8,9 @@ import { useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
+import connectDb from "@/db/connectDb";
 
-const PaymentPage = ({ username }) => {
+const PaymentPage = ({ username, paymentsLength }) => {
   const { data: session } = useSession();
   const [paymentform, setpaymentform] = useState({
     name: "",
@@ -91,19 +92,14 @@ const PaymentPage = ({ username }) => {
     paymentform.message.length < 3 ||
     paymentform.amount.length < 1;
 
-  useEffect(() => {
-    console.log("Payment form state:", paymentform);
-    console.log("Button disabled state:", isDisabled);
-  }, [paymentform]);
-
   return (
     <>
       <ToastContainer />
       <Script src="https://checkout.razorpay.com/v1/checkout.js"></Script>
 
       <div className="cover w-full relative">
-        <img src={currentuser.coverpic} alt="" />
-        <div className="dp absolute -bottom-10 left-[45%] border-2 border-white rounded-lg">
+        <img className="w-full" src={currentuser.coverpic} alt="" />
+        <div className="dp absolute -bottom-10 left-[36%] md:left-[44%] border-2 border-white rounded-lg">
           <img
             className="rounded-lg"
             width={125}
@@ -119,15 +115,15 @@ const PaymentPage = ({ username }) => {
         <div className="flex gap-3 items-center justify-center text-slate-400">
           <div>{payments.length} Payments</div>
           <div>&#8226;</div>
-          <div>₹{payments.reduce((a,b)=>a+b.amount,0)} raised</div>
+          <div>₹{payments.reduce((a, b) => a + b.amount, 0)} raised</div>
         </div>
       </div>
-      <div className="payment flex p-14 gap-5 justify-center w-full">
-        <div className="supporters bg-slate-900 px-5 py-2 overflow-y-scroll h-[70vh] rounded lg border-2 border-white w-1/2">
-          <h2 className="text-2xl font-bold pb-2">Supporters</h2>
+      <div className="payment flex flex-col md:flex-row p-14 gap-14 md:gap-5 justify-center w-full">
+        <div className="supporters bg-slate-900 px-5 py-2  overflow-y-scroll h-[370px] rounded lg border-2 border-white w-95% md:w-1/2">
+          <h2 className="text-2xl font-bold pb-2">Top 10 Supporters</h2>
           <ul className="text-lg">
             {payments.length === 0 && <li>No payments yet</li>}
-            {payments.map((p, i) => {
+            {payments.slice(0, 10).map((p, i) => {
               return (
                 p.done && (
                   <li className="py-1 flex items-center gap-2" key={i}>
@@ -141,7 +137,7 @@ const PaymentPage = ({ username }) => {
             })}
           </ul>
         </div>
-        <div className="make-payment bg-slate-900 px-5 py-2 w-1/2 rounded lg border-2 border-white">
+        <div className="make-payment bg-slate-900 px-5 py-2 w-[100%] md:w-1/2 rounded lg border-2 border-white">
           <h2 className="text-2xl font-bold pb-2">Make a Payment</h2>
           <div className="flex flex-col gap-2">
             <input
@@ -176,7 +172,7 @@ const PaymentPage = ({ username }) => {
               Pay Now
             </button>
           </div>
-          <div className="flex gap-2 pt-5 w-full">
+          <div className="flex flex-col md:flex-row gap-2 pt-5 w-full">
             <button
               className="bg-gradient-to-br w-full from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-3 text-center me-2 mb-2 disabled:bg-slate-600 disabled:from-slate-600"
               onClick={() => pay(500)}

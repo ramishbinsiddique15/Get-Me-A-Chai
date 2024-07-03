@@ -31,13 +31,10 @@ export const authoptions = NextAuth({
     async signIn({ user, account, profile, email, credentials }) {
       if (account.provider === "github") {
         try {
-          console.log("Connecting to DB...");
           await connectDb();
-          console.log("Connected to DB");
 
           const currentUser = await User.findOne({ email: user.email });
           if (!currentUser) {
-            console.log("Creating new user...");
             const newUser = await User.create({
               email: user.email,
               username: user.email.split("@")[0],
@@ -52,7 +49,6 @@ export const authoptions = NextAuth({
 
     async session({ session, user, token }) {
       const dbUser = await User.findOne({email:session.user.email})
-      console.log(dbUser)
       session.user.name = dbUser.username
       return session
     },

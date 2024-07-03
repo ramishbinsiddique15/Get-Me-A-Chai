@@ -15,9 +15,9 @@ const Navbar = () => {
   //   );
   // }
   return (
-    <nav className="bg-slate-900 text-white flex items-center justify-between p-5">
+    <nav className="gap-1 bg-slate-900 text-white flex items-center justify-between p-5 flex-col md:flex-row md:gap-0">
       <Link href={"/"}>
-        <div className="logo font-bold text-lg flex items-center justify-center">
+        <div className="logo font-bold text-lg flex items-center justify-center ">
           <img className="invertImg" src="/img/tea.gif " width={40} alt="" />
           Get Me a Chai
         </div>

@@ -1,9 +1,15 @@
 "use client";
 
-import React from "react";
+import React, {useEffect} from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 const page = () => {
+  useEffect(() => {
+    document.title = "Login | Get Me a Chai";
+  }, [])
+  
+
+
   const { data: session } = useSession();
   if (session) {
     const router = useRouter();
@@ -12,7 +18,7 @@ const page = () => {
   return (
     <div className="text-white pt-5 container mx-auto flex flex-col items-center">
       <h2 className="font-bold text-3xl text-center">
-        Login to Get your fans to support you
+        Login to Get Started
       </h2>
       <div className="flex flex-col gap-2   p-5">
         <button className="flex items-center bg-white border border-gray-300 rounded-lg shadow-md max-w-xs px-6 py-2 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
@@ -243,3 +249,4 @@ const page = () => {
 };
 
 export default page;
+
